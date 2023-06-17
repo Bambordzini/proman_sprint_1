@@ -2,15 +2,17 @@
 <html>
 <head>
     <title>Login</title>
+    <!-- You can include CSS stylesheets here for better appearance -->
 </head>
 <body>
-    <h2>Login</h2>
-    <form method="post">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" required>
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
+    <h1>Login</h1>
+    <form action="{{ url_for('login') }}" method="post">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">Password:</label><br>
+        <input type="password" id="password" name="password" required><br>
         <input type="submit" value="Login">
     </form>
+    <p>Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
 </body>
 </html>

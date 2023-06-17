@@ -13,13 +13,13 @@ export let boardsManager = {
             domManager.addEventListener(
                 `.toggle-board-button[data-board-id="${board.id}"]`,
                 "click",
-                showHideButtonHandler
+                this.showHideButtonHandler
             );
         }
     },
-};
 
-function showHideButtonHandler(clickEvent) {
-    const boardId = clickEvent.target.dataset.boardId;
-    cardsManager.loadCards(boardId);
-}
+    showHideButtonHandler: async function (clickEvent) {
+        const boardId = clickEvent.target.dataset.boardId;
+        await cardsManager.loadCards(boardId);
+    },
+};

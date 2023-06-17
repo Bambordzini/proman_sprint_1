@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strona główna</title>
+</head>
+<body>
+    <h1>Witaj na stronie główną!</h1>
+    <a href="{{ url_for('logout') }}">Wyloguj</a>
+
+    <!-- formularz tablicy -->
+    <form action="{{ url_for('create_board') }}" method="post">
+        <input type="text" name="title" placeholder="Nazwa nowej tablicy">
+        <input type="submit" value="Utwórz nową tablicę">
+    </form>
+
+    <div class="boards">
+        {% for board in boards %}
+        <div class="board">
+            <h2 class="board-title" data-board-id="{{ board.id }}">{{ board.title }}</h2>
+            <!-- więcej  -->
+        </div>
+        {% endfor %}
+    </div>
+    <div class="boards">
+        {% for board in boards %}
+          <div class="board">
+            <h2>{{ board.name }}</h2>
+            <div class="cards">
+              {% for card in board.cards %}
+                <div class="card">
+                  <h3>{{ card.title }}</h3>
+                  <p>{{ card.description }}</p>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      
+
+    <script>
+        document.querySelectorAll('.board-title').forEach(function(titleElement) {
+            titleElement.addEventListener('click', function() {
+                var title = prompt('Podaj nowy tytuł dla tablicy:');
+                if (title) {
+                    fetch('/change-board-title', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            board_id: titleElement.dataset.boardId,
+                            new_title: title
+                        })
+                    }).then(function(response) {
+                        if (response.ok) {
+                            titleElement.textContent = title;
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
